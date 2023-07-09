@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "App-1",
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "type": "dart",
+      "program": "${workspaceFolder}\\lib\\main.dart"
+    },
+    {
+      "name": "App-2",
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "type": "dart",
+      "program": "${workspaceFolder}lib\\CustomerApp\\main.dart --html-renderer=html"
+    }
+  ]
+}
