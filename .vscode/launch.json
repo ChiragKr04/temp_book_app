@@ -2,18 +2,30 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "App-1",
-      "cwd": "${workspaceFolder}",
+      "name": "Mobile (Debug)",
       "request": "launch",
       "type": "dart",
-      "program": "${workspaceFolder}\\lib\\main.dart"
+      "flutterMode": "debug"
     },
     {
-      "name": "App-2",
-      "cwd": "${workspaceFolder}",
+      "name": "Mobile (Release)",
       "request": "launch",
       "type": "dart",
-      "program": "${workspaceFolder}lib\\CustomerApp\\main.dart --html-renderer=html"
+      "flutterMode": "release"
+    },
+    {
+      "name": "Chrome (Debug)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": ["-d", "chrome", "--web-renderer", "html"]
+    },
+    {
+      "name": "Chrome (Release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "args": ["-d", "chrome", "--web-renderer", "html"]
     }
   ]
 }

@@ -1,7 +1,9 @@
 import 'package:book_app/pages/BookInfoView/controller/BookInfoViewController.dart';
 import 'package:book_app/routes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:html' as html;
 
 class BookInfoView extends StatefulWidget {
   const BookInfoView({super.key});
@@ -209,7 +211,17 @@ class _BookInfoViewState extends State<BookInfoView> {
                                 foregroundColor: Colors.blue,
                                 side: const BorderSide(color: Colors.blue),
                               ),
-                              onPressed: () async {
+                              onPressed: () {
+                                if (kIsWeb) {
+                                  html.window.open(
+                                    viewController
+                                        .bookData.value!.volumeInfo.previewLink
+                                        .toString()
+                                        .replaceAll("http", "https"),
+                                    '_blank',
+                                  );
+                                  return;
+                                }
                                 Navigator.of(context).pushNamed(
                                   CustomRoutes.bookPreviewRoute,
                                   arguments: {
@@ -232,6 +244,15 @@ class _BookInfoViewState extends State<BookInfoView> {
                                 elevation: 0,
                               ),
                               onPressed: () {
+                                if (kIsWeb) {
+                                  html.window.open(
+                                    viewController
+                                        .bookData.value!.volumeInfo.infoLink
+                                        .toString(),
+                                    '_blank',
+                                  );
+                                  return;
+                                }
                                 Navigator.of(context).pushNamed(
                                   CustomRoutes.bookPreviewRoute,
                                   arguments: {
