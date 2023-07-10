@@ -16,7 +16,6 @@ class HttpClient {
         ...?headers,
       },
     );
-    log("response: ${response.body}");
     return response;
   }
 }

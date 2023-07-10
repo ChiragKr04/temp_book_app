@@ -17,30 +17,53 @@ class _TabsViewState extends State<TabsView> {
   Rx<AppTabViews> currentView = AppTabViews.Home.obs;
   RxInt currentIndex = 0.obs;
 
+  void search() {
+    showSearch(
+      context: context,
+      delegate: CustomSearchDelegate(
+        goToBookStore: (value) {
+          currentView.value = AppTabViews.Shop;
+          currentIndex.value = 1;
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Book App'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearchDelegate(
-                  goToBookStore: (value) {
-                    currentView.value = AppTabViews.Shop;
-                    currentIndex.value = 1;
-                  },
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(70),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () => search(),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-              );
-            },
-            icon: const Icon(Icons.search),
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  title: const Text('Book App'),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        search();
+                      },
+                      icon: const Icon(Icons.search),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ],
+        ),
+        bottomNavigationBar: _getNavBar(),
+        body: Obx(() => _getBody()),
       ),
-      bottomNavigationBar: _getNavBar(),
-      body: Obx(() => _getBody()),
     );
   }
 
@@ -55,9 +78,10 @@ class _TabsViewState extends State<TabsView> {
 
   Widget _getNavBar() {
     return Obx(
-      () => BottomNavigationBar(
-        currentIndex: currentIndex.value,
-        onTap: (index) {
+      () => NavigationBar(
+        selectedIndex: currentIndex.value,
+        indicatorColor: Colors.blue,
+        onDestinationSelected: (index) {
           currentIndex.value = index;
           switch (index) {
             case 0:
@@ -68,12 +92,12 @@ class _TabsViewState extends State<TabsView> {
               break;
           }
         },
-        items: const [
-          BottomNavigationBarItem(
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.shopping_cart),
             label: 'Shop',
           ),

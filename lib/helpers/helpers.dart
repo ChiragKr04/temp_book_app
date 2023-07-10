@@ -17,3 +17,45 @@ extension BottomReachExtension on ScrollController {
     });
   }
 }
+
+enum BookCategory {
+  TopSelling,
+  NewReleases,
+  Comedy,
+  Comics,
+  Adventure,
+  SciFi,
+  NonFiction,
+  Inspiring,
+  DiscountedBooks,
+  Sale,
+}
+
+extension BookCategoryExtension on BookCategory {
+  String get name {
+    switch (this) {
+      case BookCategory.TopSelling:
+        return 'Top Selling';
+      case BookCategory.NewReleases:
+        return 'New Releases';
+      case BookCategory.Comedy:
+        return 'Comedy';
+      case BookCategory.Comics:
+        return 'Comics';
+      case BookCategory.Adventure:
+        return 'Adventure';
+      case BookCategory.SciFi:
+        return 'Sci-Fi';
+      case BookCategory.NonFiction:
+        return 'Non-fiction';
+      case BookCategory.Inspiring:
+        return 'Inspiring';
+      case BookCategory.DiscountedBooks:
+        return 'Discount Books';
+      case BookCategory.Sale:
+        return 'Sale';
+      default:
+        return '';
+    }
+  }
+}

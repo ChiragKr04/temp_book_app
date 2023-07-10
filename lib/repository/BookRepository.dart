@@ -3,13 +3,13 @@ import 'package:book_app/models/BookModel.dart';
 import 'package:http/http.dart' as http;
 
 class BookRepository {
-  final HttpClient httpClient = HttpClient();
+  final HttpClient _httpClient = HttpClient();
 
   Future<List<BookItem>> getBooks({
     required String query,
     required int index,
   }) async {
-    final http.Response response = await httpClient.get(
+    final http.Response response = await _httpClient.get(
       url:
           'https://www.googleapis.com/books/v1/volumes?q=$query&startIndex=$index',
     );
@@ -19,7 +19,7 @@ class BookRepository {
   Future<BookItem> getBookData({
     required String bookId,
   }) async {
-    final http.Response response = await httpClient.get(
+    final http.Response response = await _httpClient.get(
       url:
           'https://www.googleapis.com/books/v1/volumes/$bookId',
     );

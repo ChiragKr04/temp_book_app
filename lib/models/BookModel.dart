@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'dart:math';
 
 BookModel bookModelFromJson(String str) => BookModel.fromJson(json.decode(str));
 
 String bookModelToJson(BookModel data) => json.encode(data.toJson());
 
 class BookModel {
-  String kind;
-  int totalItems;
+  String? kind;
+  int? totalItems;
   List<BookItem> items;
 
   BookModel({
@@ -45,10 +46,10 @@ class BookModel {
 BookItem bookItemFromJson(String str) => BookItem.fromJson(json.decode(str));
 
 class BookItem {
-  String kind;
+  String? kind;
   String id;
-  String etag;
-  String selfLink;
+  String? etag;
+  String? selfLink;
   VolumeInfo volumeInfo;
   SaleInfo saleInfo;
   AccessInfo accessInfo;
@@ -463,32 +464,54 @@ class ImageLinks {
 
 class Price {
   double? amount;
+  double? discountAmount;
   String currencyCode;
 
   Price({
     required this.amount,
     required this.currencyCode,
+    required this.discountAmount,
   });
 
   Price copyWith({
     double? amount,
     String? currencyCode,
+    double? discountAmount,
   }) =>
       Price(
         amount: amount ?? this.amount,
         currencyCode: currencyCode ?? this.currencyCode,
+        discountAmount: discountAmount ?? this.discountAmount,
       );
+
+  static double? _generateRandomPrice() {
+    double value = Random().nextDouble() * 1000;
+    if (value == 0.0) {
+      return null;
+    }
+    return value;
+  }
+
+  static double? _generateRandomDiscount() {
+    double value = Random().nextDouble() * 100;
+    if (value == 0.0) {
+      return null;
+    }
+    return value;
+  }
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
         amount: json["amount"] != null
             ? double.parse(json["amount"].toString())
-            : null,
+            : _generateRandomPrice(),
         currencyCode: json["currencyCode"],
+        discountAmount: _generateRandomDiscount(),
       );
 
   Map<String, dynamic> toJson() => {
         "amount": amount,
-        "thumbnail": currencyCode,
+        "currencyCode": currencyCode,
+        "discountAmount": discountAmount,
       };
 }
 

@@ -36,104 +36,107 @@ class _BookQueryViewState extends State<BookQueryView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (viewController.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
       return Scaffold(
         appBar: AppBar(
           title: Text(query),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                controller: viewController.scrollController,
+        body: viewController.isLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
                 children: [
-                  ...viewController.books.map(
-                    (book) => InkWell(
-                      onTap: () async {
-                        Navigator.of(context).pushNamed(
-                          CustomRoutes.bookInfoViewRoute,
-                          arguments: {
-                            "bookId": book.id,
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 150,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 120,
+                  Expanded(
+                    child: ListView(
+                      controller: viewController.scrollController,
+                      children: [
+                        ...viewController.books.map(
+                          (book) => InkWell(
+                            onTap: () async {
+                              Navigator.of(context).pushNamed(
+                                CustomRoutes.bookInfoViewRoute,
+                                arguments: {
+                                  "bookId": book.id,
+                                },
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
                                 height: 150,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: book.volumeInfo.imageLinks != null
-                                        ? NetworkImage(
-                                            book.volumeInfo.imageLinks!
-                                                .smallThumbnail,
-                                          )
-                                        : const AssetImage(
-                                                "assets/images/flutter_logo.png")
-                                            as ImageProvider,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          book.volumeInfo.title,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: context.textTheme.bodyLarge!
-                                              .copyWith(
-                                            fontSize: 21,
-                                          ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 120,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: book.volumeInfo.imageLinks !=
+                                                  null
+                                              ? NetworkImage(
+                                                  book.volumeInfo.imageLinks!
+                                                      .smallThumbnail,
+                                                )
+                                              : const AssetImage(
+                                                      "assets/images/flutter_logo.png")
+                                                  as ImageProvider,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
-                                      Flexible(
-                                        child: Text(
-                                          book.volumeInfo.subtitle ?? "",
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: context.textTheme.bodyMedium,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                book.volumeInfo.title,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: context
+                                                    .textTheme.bodyLarge!
+                                                    .copyWith(
+                                                  fontSize: 21,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Flexible(
+                                              child: Text(
+                                                book.volumeInfo.subtitle ?? "",
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: context
+                                                    .textTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
+                  if (viewController.isSearching)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  if (viewController.hasReachedEnd)
+                    const Center(
+                      child: Text("Thank you for scrolling!"),
+                    ),
                 ],
               ),
-            ),
-            if (viewController.isSearching)
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
-            if (viewController.hasReachedEnd)
-              const Center(
-                child: Text("Thank you for scrolling!"),
-              ),
-          ],
-        ),
       );
     });
   }
