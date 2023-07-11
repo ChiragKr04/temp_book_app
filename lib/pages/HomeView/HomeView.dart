@@ -16,6 +16,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeViewController viewController = HomeViewController();
 
+  /// Function to view all books of current category
   void viewAllCurrentCategoryBooks(BookCategory category) async {
     await Navigator.pushNamed(
       context,
@@ -123,6 +124,8 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  /// Custom List Tile
+  /// Used to display the category title and view all button
   Widget CustomListTile({
     required String title,
     required BookCategory category,

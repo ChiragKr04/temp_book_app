@@ -4,6 +4,9 @@ import 'package:book_app/pages/BookQueryView/BookQueryView.dart';
 import 'package:book_app/pages/TabsView.dart';
 import 'package:flutter/material.dart';
 
+
+/// Adding routes to app
+/// And giving routes its Page UI / Widget
 class CustomRoutes {
   static const String tabsViewRoute = '/tabsView';
   static const String bookQueryViewRoute = '/bookQueryView';

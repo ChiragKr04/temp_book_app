@@ -5,6 +5,10 @@ BookModel bookModelFromJson(String str) => BookModel.fromJson(json.decode(str));
 
 String bookModelToJson(BookModel data) => json.encode(data.toJson());
 
+/// Book model
+/// This model is used to parse the response from the api
+/// [totalItems] is the total number of books
+/// [items] is the list of books
 class BookModel {
   String? kind;
   int? totalItems;
@@ -45,6 +49,8 @@ class BookModel {
 
 BookItem bookItemFromJson(String str) => BookItem.fromJson(json.decode(str));
 
+/// Book item model
+/// This model is used to parse the response from the api of a single book
 class BookItem {
   String? kind;
   String id;

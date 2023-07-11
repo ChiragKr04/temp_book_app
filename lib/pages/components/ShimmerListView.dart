@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// ShimmerListView is widget which gets shown when data is being fetched from api.
+/// It shows shimmer effect on the list view for better user experience.
 class ShimmerListView extends StatefulWidget {
   const ShimmerListView({super.key});
 
@@ -44,6 +46,5 @@ class _ShimmerListViewState extends State<ShimmerListView> {
         ),
       ),
     );
-    ;
   }
 }

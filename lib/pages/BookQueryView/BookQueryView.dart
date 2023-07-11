@@ -22,8 +22,12 @@ class _BookQueryViewState extends State<BookQueryView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    /// Getting query from arguments passed from previous screen
     query = (ModalRoute.of(context)!.settings.arguments
         as Map<String, String>)["query"] as String;
+
+    /// Initializing controller with query
     viewController.init(query: query);
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// Adding a helper function to check if ScrollController has reached bottom
+/// If its reached then perform any function
 extension BottomReachExtension on ScrollController {
   void onBottomReach(
     VoidCallback callback, {
@@ -18,6 +20,7 @@ extension BottomReachExtension on ScrollController {
   }
 }
 
+/// Num for all book categories in app
 enum BookCategory {
   TopSelling,
   NewReleases,
@@ -31,6 +34,8 @@ enum BookCategory {
   Sale,
 }
 
+/// Adding a helper function to get name of book category
+/// Which is used as a query to fetch books from api
 extension BookCategoryExtension on BookCategory {
   String get name {
     switch (this) {
@@ -58,4 +63,17 @@ extension BookCategoryExtension on BookCategory {
         return '';
     }
   }
+}
+
+/// Data class to store category data
+class BookCategoryData {
+  final String title;
+  final String image;
+  final BookCategory category;
+
+  BookCategoryData({
+    required this.title,
+    required this.image,
+    required this.category,
+  });
 }

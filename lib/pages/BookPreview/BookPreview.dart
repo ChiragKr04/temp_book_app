@@ -14,10 +14,13 @@ class _BookPreviewState extends State<BookPreview> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    /// Getting url from arguments passed from previous screen
     final String url = (ModalRoute.of(context)!.settings.arguments
             as Map<String, String>)["url"]
         .toString();
 
+    /// Initializing web controller with url
     webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))

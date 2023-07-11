@@ -1,9 +1,7 @@
 import 'package:book_app/pages/BookInfoView/controller/BookInfoViewController.dart';
 import 'package:book_app/routes.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:html' as html;
 
 class BookInfoView extends StatefulWidget {
   const BookInfoView({super.key});
@@ -18,8 +16,12 @@ class _BookInfoViewState extends State<BookInfoView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    /// Get the bookId from the arguments passed to this route
     String bookId = (ModalRoute.of(context)!.settings.arguments
         as Map<String, String>)["bookId"] as String;
+
+    /// Initialize the controller with the bookId
     viewController.init(bookId: bookId);
   }
 
@@ -212,16 +214,6 @@ class _BookInfoViewState extends State<BookInfoView> {
                                 side: const BorderSide(color: Colors.blue),
                               ),
                               onPressed: () {
-                                if (kIsWeb) {
-                                  html.window.open(
-                                    viewController
-                                        .bookData.value!.volumeInfo.previewLink
-                                        .toString()
-                                        .replaceAll("http", "https"),
-                                    '_blank',
-                                  );
-                                  return;
-                                }
                                 Navigator.of(context).pushNamed(
                                   CustomRoutes.bookPreviewRoute,
                                   arguments: {
@@ -244,15 +236,6 @@ class _BookInfoViewState extends State<BookInfoView> {
                                 elevation: 0,
                               ),
                               onPressed: () {
-                                if (kIsWeb) {
-                                  html.window.open(
-                                    viewController
-                                        .bookData.value!.volumeInfo.infoLink
-                                        .toString(),
-                                    '_blank',
-                                  );
-                                  return;
-                                }
                                 Navigator.of(context).pushNamed(
                                   CustomRoutes.bookPreviewRoute,
                                   arguments: {
@@ -267,7 +250,7 @@ class _BookInfoViewState extends State<BookInfoView> {
                                             .listPrice ==
                                         null
                                     ? "Free"
-                                    : "Buy ₹${viewController.bookData.value!.saleInfo.listPrice!.amount}",
+                                    : "Buy ₹${viewController.bookData.value!.saleInfo.listPrice!.amount!.toStringAsFixed(2)}",
                               ),
                             ),
                           ),
@@ -305,7 +288,7 @@ class _BookInfoViewState extends State<BookInfoView> {
     return Container(
       height: 30,
       width: 2,
-      color: Colors.black,
+      color: Colors.white.withOpacity(0.5),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:book_app/repository/BookRepository.dart';
 import 'package:get/get.dart';
 
 class HomeViewController {
+  /// Settings up categories to show on home screen
   List<BookCategoryData> getBookCategoryData() {
     return [
       BookCategoryData(
@@ -31,11 +32,13 @@ class HomeViewController {
 
   BookRepository bookRepository = BookRepository();
 
+  /// Stores different list of books for different categories
   Rxn<List<BookItem>> adventureBooks = Rxn<List<BookItem>>();
   Rxn<List<BookItem>> scifiBooks = Rxn<List<BookItem>>();
   Rxn<List<BookItem>> nonfictionBooks = Rxn<List<BookItem>>();
   Rxn<List<BookItem>> inspiringBooks = Rxn<List<BookItem>>();
 
+  /// Fetching all books based on category and storing them in respective variables
   void fetchAllBooks() async {
     adventureBooks.value = await bookRepository.getBooks(
       index: 1,
@@ -56,14 +59,3 @@ class HomeViewController {
   }
 }
 
-class BookCategoryData {
-  final String title;
-  final String image;
-  final BookCategory category;
-
-  BookCategoryData({
-    required this.title,
-    required this.image,
-    required this.category,
-  });
-}
